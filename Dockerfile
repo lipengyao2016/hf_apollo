@@ -24,3 +24,4 @@ RUN echo "http://mirrors.aliyun.com/alpine/v3.6/main" > /etc/apk/repositories \
     && sed -i "s/exit 0;/tail -f \/dev\/null/g" /apollo-quick-start/demo.sh
 
 CMD ["/apollo-quick-start/demo.sh", "start"]
+#CMD ["tail", "-f", "/etc/apk/repositories"]

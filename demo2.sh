@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # apollo config db info
-apollo_config_db_url=jdbc:mysql://rm-wz9w12x0t14d40b842o.mysql.rds.aliyuncs.com:3306/ApolloConfigDB?characterEncoding=utf8
-apollo_config_db_username=apollo_admin
-apollo_config_db_password=Asd123456
+apollo_config_db_url=jdbc:mysql://192.168.5.154:3306/ApolloConfigDB?characterEncoding=utf8
+apollo_config_db_username=root
+apollo_config_db_password=123456
 
 # apollo portal db info
-apollo_portal_db_url=jdbc:mysql://rm-wz9w12x0t14d40b842o.mysql.rds.aliyuncs.com:3306/ApolloPortalDB?characterEncoding=utf8
-apollo_portal_db_username=apollo_admin
-apollo_portal_db_password=Asd123456
+apollo_portal_db_url=jdbc:mysql://192.168.5.154:3306/ApolloPortalDB?characterEncoding=utf8
+apollo_portal_db_username=root
+apollo_portal_db_password=123456
 
 # =============== Please do not modify the following content =============== #
 
@@ -36,15 +36,15 @@ PORTAL_JAVA_OPTS="$BASE_JAVA_OPTS -Ddev_meta=$config_server_url -Dspring.profile
 
 # executable
 JAR_FILE=apollo-all-in-one.jar
-SERVICE_DIR=./service
+SERVICE_DIR=/apollo-quick-start/service
 SERVICE_JAR_NAME=apollo-service.jar
 SERVICE_JAR=$SERVICE_DIR/$SERVICE_JAR_NAME
 SERVICE_LOG=$SERVICE_DIR/apollo-service.log
-PORTAL_DIR=./portal
+PORTAL_DIR=/apollo-quick-start/portal
 PORTAL_JAR_NAME=apollo-portal.jar
 PORTAL_JAR=$PORTAL_DIR/$PORTAL_JAR_NAME
 PORTAL_LOG=$PORTAL_DIR/apollo-portal.log
-CLIENT_DIR=./client
+CLIENT_DIR=/apollo-quick-start/client
 CLIENT_JAR=$CLIENT_DIR/apollo-demo.jar
 
 # go to script directory
@@ -105,12 +105,7 @@ if [ "$1" = "start" ] ; then
   echo "Service logging file is $SERVICE_LOG"
   export JAVA_OPTS="$SERVER_JAVA_OPTS -Dlogging.file=./apollo-service.log -Dspring.datasource.url=$apollo_config_db_url -Dspring.datasource.username=$apollo_config_db_username -Dspring.datasource.password=$apollo_config_db_password"
 
-  if [[ -f $SERVICE_JAR ]]; then
-    rm -rf $SERVICE_JAR
-  fi
 
-  ln $JAR_FILE $SERVICE_JAR
-  chmod a+x $SERVICE_JAR
 
   $SERVICE_JAR start --configservice --adminservice
 
@@ -149,12 +144,7 @@ if [ "$1" = "start" ] ; then
   echo "Portal logging file is $PORTAL_LOG"
   export JAVA_OPTS="$PORTAL_JAVA_OPTS -Dlogging.file=./apollo-portal.log -Dserver.port=8070 -Dspring.datasource.url=$apollo_portal_db_url -Dspring.datasource.username=$apollo_portal_db_username -Dspring.datasource.password=$apollo_portal_db_password"
 
-  if [[ -f $PORTAL_JAR ]]; then
-    rm -rf $PORTAL_JAR
-  fi
 
-  ln $JAR_FILE $PORTAL_JAR
-  chmod a+x $PORTAL_JAR
 
   $PORTAL_JAR start --portal
 
