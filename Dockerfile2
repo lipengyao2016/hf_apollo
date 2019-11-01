@@ -1,0 +1,11 @@
+# Dockerfile for apollo quick start
+# Build with:
+# docker build -t apollo-quick-start .
+# Run with:
+# docker-compose up
+FROM openjdk:8-jdk-alpine
+VOLUME /tmp
+
+COPY ./ /home/apollo/
+
+CMD ["/home/apollo/demo.sh", "start"]
